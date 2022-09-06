@@ -1,25 +1,46 @@
-import logo from './logo.svg';
-import './App.css';
+import logo from "./logo.svg";
+import { useState } from "react";
+import "./App.css";
+import ChatWindow from './ChatWindow'
 
-function App() {
+
+const users = [{ username: "Amy" }, { username: "John" }];
+
+const App = () => {
+  // If the user did not type anything, he/  not be allowed to submit.
+  
+const [messages , setMessages] = useState([])
+
+
+function onMessage (username, message){
+const newMessage ={
+  username: username,
+  text: message
+}
+setMessages(prevMessages => [...prevMessages, newMessage])
+}
+
   return (
-    <div className="App">
+    <div className="App" id="app">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1 className="App-title">ReactND - Coding Practice</h1>
       </header>
+      <div className="container">
+       
+
+      {users.map((user) => (
+          <ChatWindow
+            key={user.username}
+            user={user}
+            messages={messages}
+            onMessage={onMessage}
+          />
+        ))}
+
+      </div>
     </div>
   );
-}
+};
 
 export default App;
